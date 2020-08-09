@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>0066C027-HW06-2</title>
+        <script type="text/javascript">
+            function generize()
+            {
+                var article  = ["the", "a", "one", "some" , "any"];
+                var noun = ["boy", "girl", "dog", "cat" , "car"];
+                var verb = ["drove", "jumped", "ran", "walked" , "skipped"];
+                var perpo = ["to", "from", "over", "under" , "on"];
+                var num1 = Math.floor(Math.random()*4+1);
+                var num2 = Math.floor(Math.random()*4+1);
+                var num3 = Math.floor(Math.random()*4+1);
+                var num4 = Math.floor(Math.random()*4+1);
+                var num5 = Math.floor(Math.random()*4+1);
+                var num6 = Math.floor(Math.random()*4+1); 
+                var combine = article[num1]+" "+noun[num2]+" "+verb[num3]+" "+perpo[num4]+" "+article[num5]+" "+noun[num6]+".";
+                var slice = combine.substring(0,1);
+                var new_slice = slice.toUpperCase();
+                combine = new_slice + combine.substring(1);
+                return combine;
+            }
+            function last()
+            {
+                var total = document.getElementById("sentence");
+                var new_total = parseInt(total.value);
+                if(new_total<=0)
+                {
+                    new_total = 10;
+                    window.alert("Not a valid number!");
+                }
+                var show = document.getElementById("demo");
+                show.innerHTML = "Once upon a time...<br><br>";
+                for(var i=0;i<new_total;i++)
+                {
+                    var temp = generize();
+                    show.innerHTML += temp+"<br><br>";
+                }
+                show.innerHTML += "THE END";
+            }
+            function start()
+            {
+                var button = document.getElementById("but");
+                button.addEventListener("click",last,false);
+            }
+            window.addEventListener("load",start,false);
+        </script>
+            <style type="text/css">
+                #demo{overflow:scroll;
+                      background-color: lightgoldenrodyellow;
+                      font-family:Calibri;
+                      font-size:16px;
+                      height:400px;
+                      width:40%;
+                      font-weight:bold;}
+            </style>
+    </head>
+    <body>
+        <div id="demo"></div>
+        <form>
+            # of sentences:
+            <input type="text" id = "sentence" value="10" style="width:40px;"><br><br>
+            <input type="button" id = "but"value="Generate Short Story">
+        </form>
+    </body>
+</html>

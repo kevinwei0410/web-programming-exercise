@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>0066c027-HW09-1</title>
+      <style type="text/css">
+            #canvas { width: 400px;
+                    border: 1px solid #999999;
+                    border-collapse: collapse }
+            td      { width: 4px; height: 4px; margin: 0px; padding: 0px; }
+            .blue   { background-color: blue; }
+            .red    { background-color: red; }
+            .black  { background-color: black;}
+            .white  { background-color: white;}
+            span    { text-align: center;}
+      </style>
+      <script type="text/javascript">
+            var side = 100;
+            var tbody = document.getElementById( "tablebody" );
+            
+            function createCanvas()
+            {
+            var side = 100;
+            var tbody = document.getElementById( "tablebody" );
+            
+            for ( var i = 0; i < side; ++i )
+            {
+                var row = document.createElement( "tr" );
+                
+                for ( var j = 0; j < side; ++j )
+                {
+                    var cell = document.createElement( "td" );
+                    cell.setAttribute( "id","draw-"+i+"-"+j);
+                    row.appendChild( cell );
+                }
+
+                tbody.appendChild( row );
+            }
+
+            history();
+            document.getElementById( "canvas" ).addEventListener("mousemove", processMouseMove, false );
+            document.getElementById( "Clear Canvas" ).addEventListener("click", Clear ,false);
+            }
+
+            function history()
+            {
+                var length = localStorage.length;
+                for(var i = 0;i < length ; i++)
+                {
+                    if("draw-"==localStorage.key(i).substring(0,5))
+                    {
+                        var item = localStorage.key(i);
+                        var now_pos = document.getElementById(item);
+                        now_pos.setAttribute("class" , localStorage.getItem(item));
+                    }
+                }
+            }
+            
+            function processMouseMove( e )
+            {        
+            if ( e.target.tagName.toLowerCase() == "td" )
+            {
+                var temp;
+                if ( e.ctrlKey )
+                {
+                    e.target.setAttribute( "class", "blue" );
+                    localStorage.setItem(e.target.getAttribute( "id" ),"blue");
+                } 
+                if ( e.shiftKey )
+                {
+                    e.target.setAttribute( "class", "red" );
+                    localStorage.setItem(e.target.getAttribute( "id" ),"red");
+                } 
+                if ( e.altKey )
+                {
+                    e.target.setAttribute( "class", "black" );
+                    localStorage.setItem(e.target.getAttribute( "id" ),"black");
+                }
+                if ( e.which )
+                {
+                    e.target.removeAttribute( "class" );
+                    localStorage.removeItem(e.target.getAttribute( "id" ));
+                }
+            } 
+            } 
+            function Clear()
+            {
+                var length = localStorage.length;
+                for (var i = 0;i < length ;i ++ )
+                {
+                    var item = localStorage.key(i);
+                    var now_pos = document.getElementById(item);
+                    now_pos.removeAttribute( "class" );
+                }
+                localStorage.clear();
+            }
+            window.addEventListener( "load", createCanvas, false );
+      </script>
+   </head>
+   <body>
+      <table id = "canvas">
+         <caption>Hold <em>Ctrl</em> to draw blue. 
+            <em>Shift</em> to draw red.<em>Alt</em> to draw black.<br>
+        <span>Press mouse to erase paint.</span></caption>
+         <tbody id = "tablebody"></tbody>
+      </table>
+      <form>
+          <input type="button" value="Clear Canvas" id="Clear Canvas">
+      </form>
+   </body>
+</html>

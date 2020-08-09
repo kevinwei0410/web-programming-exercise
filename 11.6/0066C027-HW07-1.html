@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "utf-8">
+        <title>0066C027-HW07-1</title>
+        <style type="text/css">
+            #roll {width:200px;
+                    font-weight: bold;}
+            #print{color:navy;
+                   font-weight: bold;
+                   width:200px;
+                   text-align: center;}
+        </style>
+        <script type="text/javascript">
+            function start()
+            {
+                var button = document.getElementById("roll");
+                button.addEventListener("click",rolling,false);
+                var mus = document.getElementById("music");
+                mus.addEventListener("ended",show,false);
+            }
+            function rolling()
+            {
+                var mus = document.getElementById("music");
+                var image = document.getElementById("demo");
+                mus.play();
+                image.src = "blank.png";
+            }
+            function show()
+            {
+                var array = ["01","02","03","04","05","06","07","08","09","10"];
+                var array2 = ["任意門","時光機","竹蜻蜓","時光布","記憶麵包","縮小燈","翻譯蒟蒻","如果電話亭","穿透環","更衣照相機"];
+                var num = Math.floor(Math.random()*9+1);
+                var image = document.getElementById("demo");
+                var print = document.getElementById("print");
+                image.src = array[num]+".png";
+                print.innerHTML = "您抽到"+array2[num]+"!";
+            }
+            window.addEventListener("load",start,false);
+        </script>
+    </head>
+    <body>
+        <audio id="music" preload = "auto">
+            <source src="doraemon.mp3" type="audio/mp3" alt="error">
+        </audio>
+        <div><img src='00.png' id="demo"></div><br>
+        <form action = "#">
+            <input type="button" value="抽道具" id="roll"><br><br>
+        </form>
+        <div id="print">請按下Button抽出道具</div>
+    </body>
+</html>

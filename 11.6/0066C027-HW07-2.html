@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <meta charset = "utf-8">
+    <title>0066C027-HW07-2</title>
+    <head>
+        <style type="text/css">
+            table,th,td{border: 1px solid black;}
+            table{border-collapse: collapse;
+                  text-align: center;}
+            table th{background-color:navy;
+               color : white;}
+            table td{background-color: powderblue;}
+            #head1{width:100px;}
+            #head2{width:200px;}
+        </style>
+        <script type="text/javascript">
+        function start()
+        {
+            load();
+            var button1 = document.getElementById("but1");
+            var button2 = document.getElementById("but2");
+            button1.addEventListener("click",add,false);
+            button2.addEventListener("click",remove,false);
+        }
+        function add()
+        {
+            var k_object = document.getElementById("key");
+            var v_object = document.getElementById("value");
+            if(k_object.value=="")
+                window.alert("請輸入Key!");
+            else
+                localStorage.setItem("ntou-"+k_object.value,v_object.value);
+            k_object = "";
+            v_object = "";
+            load();
+        }
+        function load()
+        {
+            var tags = [];
+            var length = localStorage.length;
+             for (var i = 0; i < length; ++i) 
+            {
+                tags[i] = localStorage.key(i).substring(5);
+            }
+            var print = "<table><tr><th id='head1'>key</th><th id='head2'>value</th></tr>";
+            for(var i in tags)
+                print += "<tr><td>"+tags[i]+"</td><td>"+localStorage.getItem("ntou-"+tags[i])+"</tr>";
+            print +="</table>"
+            document.getElementById("demo").innerHTML = print;
+        }
+        function remove()
+        {
+            var tags = [];
+            var length = localStorage.length;
+            for (var i = 0; i < length; ++i) 
+            {
+                tags[i] = localStorage.key(i);
+            }
+            for (var i in tags)
+            {
+                if(tags[i].startsWith("ntou-"))
+                    localStorage.removeItem(tags[i]);
+            }
+            load();
+        }
+        window.addEventListener("load",start,false);
+        </script>
+    </head>
+    <body>
+        Key:<input tyep="text" id="key">
+        Value:<input type="text" id="value"><br><br>
+        <form action = "#">
+            <input type="button" id="but1" value="Add New Item">
+            <input type="button" id="but2" value="Remove All Items">
+        </form>
+        <br><hr>
+        <div id="demo"><table><tr><th id='head1'>key</th><th id='head2'>value</th></tr></table></div>
+    </body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <style type="text/css">
+            p{color:navy;
+              font-family:Helvetica,MicrosoftYaHei,LiHei Pro,TW-Kai;}
+            img{ margin: 0; 
+                margin-right: 10px; }
+        </style>
+        <script type="text/javascript">
+            function start()
+            {
+                var but_rol = document.getElementById("Roll");
+                var but_shotcut = document.getElementById("Shotcut");
+                var but_shotcut2 = document.getElementById("Shotcut2");
+                but_rol.addEventListener("click",rol,false);
+                but_shotcut.addEventListener("click",shotcut,false);
+                but_shotcut2.addEventListener("click",shotcut2,false);
+            }
+            function rol()
+            {
+                divObject= document.getElementById("display")
+                divObject.innerHTML = "";
+                var array = [];
+                for(var i=0;i<4;i++)
+                {
+                    var num = parseInt(Math.floor(Math.random()*6+1));
+                    divObject.innerHTML += "<img src='die"+num+".png'>";
+                    array[i] = num;
+                }
+                array.sort();
+                if(array[0]===array[1]&&array[1]===array[2]&array[2]===array[3])
+                    shotcut();
+                else if ((array[0]===array[1]&&array[1]===array[2])||(array[1]===array[2]&&array[2]===array[3]))
+                    divObject.innerHTML +="<p>No decision, please re-roll the dice!</p>";
+                else if(array[0]!=array[1]&&array[1]!=array[2]&&array[2]!=array[3])
+                    divObject.innerHTML +="<p>Oops! Your roll is \"無面\"!</p><img src='oops.jpg'>";
+                else
+                {
+                    if(array[0]===array[1])
+                    {
+                        if(array[2]===array[3])
+                            shotcut2();
+                        else
+                            divObject.innerHTML +="<br><p>Your score is "+ (array[2]+array[3])+" !</p>";
+                    }
+                    else if(array[1]===array[2])
+                        divObject.innerHTML +="<br><p>Your score is "+ (array[0]+array[3])+" !</p>";
+                    else
+                        divObject.innerHTML +="<br><p>Your score is "+ (array[0]+array[1])+" !</p>";
+                }
+            }            
+            function shotcut()
+            {
+                divObject= document.getElementById("display")
+                divObject.innerHTML = "";
+                var num = parseInt(Math.floor(Math.random()*6+1));
+                for(var i=0;i<4;i++)
+                {
+                divObject.innerHTML += "<img src='die"+num+".png'>";
+                }
+                divObject.innerHTML +="<p>Congratulations! Your roll is \"一色\"!</p>";
+                divObject.innerHTML +="<img src='congrats.jpg'>";
+            }
+            function shotcut2()
+            {
+                divObject= document.getElementById("display")
+                divObject.innerHTML = "";
+                var num1 = parseInt(Math.floor(Math.random()*6+1));
+                var num2 = parseInt(Math.floor(Math.random()*6+1));
+                divObject.innerHTML += "<img src='die"+num1+".png'>";
+                divObject.innerHTML += "<img src='die"+num1+".png'>";
+                divObject.innerHTML += "<img src='die"+num2+".png'>";
+                divObject.innerHTML += "<img src='die"+num2+".png'>";
+                divObject.innerHTML += "<p>Congratulations! Your roll is \"十八\"!</p>"
+                divObject.innerHTML +="<img src='congrats.jpg'>";
+                if(num1>num2)
+                    divObject.innerHTML +="<p>Your score is "+2*(num1)+"!</p>";
+                else if(num1<num2)
+                    divObject.innerHTML +="<p>Your score is "+2*(num2)+"!</p>";
+                else
+                    shotcut2();
+            }
+            window.addEventListener("load",start,false);
+        </script>
+    </head>
+    <body>
+        <form>
+            <input type="button" id="Roll" value="Roll Dice">
+            <input type="button" id="Shotcut" value="Shotcut">
+            <input type="button" id="Shotcut2" value="Shotcut2">
+        </form>
+        <div id="display"></div>
+    </body>
+</html>

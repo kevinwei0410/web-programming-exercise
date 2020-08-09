@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>0066C027-HW10</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        table {
+            border-collapse: collapse
+        }
+
+        td,
+        caption {
+            font-weight: bold;
+            font-family: helvetica, arial, sans-serif;
+        }
+
+        caption {
+            font-size: 3em;
+            color: gray;
+        }
+
+        td {
+            font-size: 4em;
+            color: blue;
+            border: 2px solid gray;
+            padding: 5px;
+        }
+
+        div {
+            font-size: 2em;
+            color: red;
+        }
+
+        button {
+            width: 80px;
+            height: 50px;
+        }
+        audio{ 
+            display: none;
+        }
+    </style>
+    <script  type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script  type="text/javascript">
+        var array = [01,02,03,04,05,06,07,08,09,10,11,12,13,14,15];
+        var jump;
+        function setup()
+        {
+            var count = 0;
+            var jump_complement = false;
+            for(var i = 0; i < 4; i++)
+            {
+                for(var j = 0;j < 4; j++)
+                {
+                    var row = i.toString();
+                    var col = j.toString();
+                    if( count === jump )
+                    {
+                        $("#cell"+i+j).text("");
+                        jump_complement = true;
+                        count++;
+                        continue;
+                    }
+                    if(jump_complement)
+                    {
+                        if(array[count - 1]<10)
+                            $("#cell"+i+j).text("0"+array[count - 1]);
+                        else
+                            $("#cell"+i+j).text(array[count - 1]);
+                    }
+                    else
+                    {
+                        if(array[count]<10)
+                            $("#cell"+i+j).text("0"+array[count]);
+                        else
+                            $("#cell"+i+j).text(array[count]);
+                    }
+                    count++;
+                }
+            }
+        }
+        function random_sort(a, b)
+        {
+            return Math.random()>.5 ? -1 : 1;
+        }
+        function start()
+        {
+            array.sort(random_sort);
+            jump = Math.floor(Math.random()*15);
+            setup();
+            $("td").each( function(){ 
+                $(this).mousemove( function (){
+                    var id = $(this).attr("id");
+                    id = id.substring(4);
+                    print(parseInt(id[0]),parseInt(id[1]));
+                } );
+            } );
+            $("#board").mouseout( function (){
+                $( "#msg" ).text( "" );
+            } );
+        }
+        function print( a, b )
+        {
+            var row_up = (a-1).toString();
+            var row_down = (a+1).toString();
+            var col_right = (b+1).toString();
+            var col_left = (b-1).toString();
+            var row = a.toString();
+            var col = b.toString();
+            if ( $("#cell"+row+col).text()==="" )
+                $( "#msg" ).text( "This is a blank cell!" );
+            else
+            {
+                if( a===0 )
+                {
+                    if( b=== 0)
+                    {
+                        if( $("#cell10").text()==="" )
+                            $( "#msg" ).text( "This tile can move down!" );
+                        else if( $("#cell01").text()==="" )
+                            $( "#msg" ).text( "This tile can move right!" );
+                        else
+                            $( "#msg" ).text( "Illegal move!" );
+                    }
+                    else if( b===3 )
+                    {
+                        if( $("#cell02").text()==="" )
+                            $( "#msg" ).text( "This tile can move left!" );
+                        else if( $("#cell13").text()==="" )
+                            $( "#msg" ).text( "This tile can move down!" );
+                        else
+                            $( "#msg" ).text( "Illegal move!" );
+                    }
+                    else
+                    {
+                        if( $("#cell0"+col_right).text()==="" )
+                            $( "#msg" ).text( "This tile can move right!" );
+                        else if( $("#cell0"+col_left).text()==="" )
+                            $( "#msg" ).text( "This tile can move left!" );
+                        else if( $("#cell1"+b).text()==="" )
+                            $( "#msg" ).text( "This tile can move down!" );
+                        else
+                            $( "#msg" ).text( "Illegal move!" );
+                    }
+                }
+                else if( a===1||a===2 )
+                {
+                    if( b===0 )
+                    {
+                        if( $("#cell"+row_up+"0").text()==="" )
+                            $( "#msg" ).text( "This tile can move up!" );
+                        else if ( $("#cell"+row_down+"0").text()==="" )
+                            $( "#msg" ).text( "This tile can move down!" );
+                        else if ( $("#cell"+a+"1").text()==="" )
+                            $( "#msg" ).text( "This tile can move right!" );
+                        else
+                            $( "#msg" ).text( "Illegal move!" );
+                    }
+                    else if( b===3 )
+                    {
+                        if( $("#cell"+row_up+"3").text()==="" )
+                            $( "#msg" ).text( "This tile can move up!" );
+                        else if ( $("#cell"+row_down+"3").text()==="" )
+                            $( "#msg" ).text( "This tile can move down!" );
+                        else if ( $("#cell"+a+"2").text()==="" )
+                            $( "#msg" ).text( "This tile can move left!" );
+                        else
+                            $( "#msg" ).text( "Illegal move!" );
+                    }
+                    else
+                    {
+                        if( $("#cell"+row_up+b).text()==="" )
+                            $( "#msg" ).text( "This tile can move up!" );
+                        else if ( $("#cell"+row_down+b).text()==="" )
+                            $( "#msg" ).text( "This tile can move down!" );
+                        else if ( $("#cell"+a+col_right).text()==="" )
+                            $( "#msg" ).text( "This tile can move right!" );
+                        else if ( $("#cell"+a+col_left).text()==="" )
+                            $( "#msg" ).text( "This tile can move left!" );
+                        else
+                            $( "#msg" ).text( "Illegal move!" );
+                    }
+                }
+                else if( a===3 )
+                {
+                    if( b===0)
+                    {
+                        if( $("#cell20").text()==="" )
+                            $( "#msg" ).text( "This tile can move up!" );
+                        else if( $("#cell31").text()==="" )
+                            $( "#msg" ).text( "This tile can move right!" );
+                        else
+                            $( "#msg" ).text( "Illegal move!" )
+                    }
+                    else if( b===3 )
+                    {
+                        if( $("#cell32").text()==="" )
+                            $( "#msg" ).text( "This tile can move left!" );
+                        else if( $("#cell23").text()==="" )
+                            $( "#msg" ).text( "This tile can move up!" );
+                        else
+                            $( "#msg" ).text( "Illegal move!" );
+                    }
+                    else
+                    {
+                        if( $("#cell3"+col_right).text()==="" )
+                            $( "#msg" ).text( "This tile can move right!" );
+                        else if( $("#cell3"+col_left).text()==="" )
+                            $( "#msg" ).text( "This tile can move left!" );
+                        else if( $("#cell2"+b).text()==="" )
+                            $( "#msg" ).text( "This tile can move up!" );
+                        else
+                            $( "#msg" ).text( "Illegal move!" );
+                    }
+                }
+                else
+                    window.alert("other");
+            }
+        }
+        function doClick(a, b)
+        {
+            if ( $( "#msg" ).text()=="This tile can move right!" )
+            {
+                var step = (parseInt(b)+1).toString();
+                $("#cell"+a+step).text(($( "#cell"+a+b ).text()));
+                $( "#cell"+a+b ).text( "" ); 
+            }
+            else if ( $( "#msg" ).text()== "This tile can move left!" )
+            {
+                var step = (parseInt(b)-1).toString();
+                $("#cell"+a+step).text(($( "#cell"+a+b ).text()));
+                $( "#cell"+a+b ).text( "" ); 
+            }
+            else if ( $( "#msg" ).text()== "This tile can move up!" )
+            {
+                var step = (parseInt(a)-1).toString();
+                $("#cell"+step+b).text(($( "#cell"+a+b ).text()));
+                $( "#cell"+a+b ).text( "" ); 
+            }
+            else if( $( "#msg" ).text()== "This tile can move down!" )
+            {
+                var step = (parseInt(a)+1).toString();
+                $("#cell"+step+b).text(($( "#cell"+a+b ).text()));
+                $( "#cell"+a+b ).text( "" ); 
+            }
+            else
+            {
+                window.alert("Illegal move!");
+            }
+            checkWin();
+        }
+        function checkWin()
+        {
+            var count = 1 ;
+            for ( var i = 0;i < 4; i++ )
+            {
+                for( var j = 0; j < 4; j++ )
+                {
+                    var row = i.toString();
+                    var col = j.toString();
+                    if($( "#cell"+row+col ).text() != count)
+                        break;
+                    if(count===15)
+                    {
+                        window.alert("Congratulation you win!!");
+                        document.getElementById("winmusic").play();
+                    }
+                    count++;
+                }
+            }
+        }
+        function restart()
+        {
+            setup();
+        }
+        function gotoLastStep()
+        {
+            var cas = Math.floor(Math.random()*2);
+            if(cas == 1)
+            {
+                var count = 1;
+                for(var i = 0; i < 4; i++)
+                {
+                    for(var j = 0; j < 4; j++)
+                    {
+                        var row = i.toString();
+                        var col = j.toString();
+                        if(count==15)
+                        {
+                            $("#cell"+row+col).text( "" );
+                            break;
+                        }
+                        if(count < 10)
+                            $("#cell"+row+col).text( "0"+count );
+                        else
+                            $("#cell"+row+col).text( count );
+                        count++;
+                    }
+                }
+                $("#cell33").text( "15" );
+            }
+            else
+            {
+                var count = 1;
+                for(var i = 0; i < 4; i++)
+                {
+                    for(var j = 0; j < 4; j++)
+                    {
+                        var row = i.toString();
+                        var col = j.toString();
+                        if(count==12)
+                        {
+                            $("#cell"+row+col).text( "" );
+                            break;
+                        }
+                        if(count < 10)
+                            $("#cell"+row+col).text( "0"+count );
+                        else
+                            $("#cell"+row+col).text( count );
+                        count++;
+                    }
+                }
+                var count = 13;
+                for(var k = 0; k < 3; k++)
+                {
+                    $("#cell3"+k).text( count );
+                    count++;
+                }
+                $("#cell33").text( "12" );
+            }
+        }
+        /*function importData()           ******************  It for bonus!!!!!!!!!!!!!!!!!
+        {
+            ******************  It for bonus!!!!!!!!!!!!!!!!!
+            ******************  It for bonus!!!!!!!!!!!!!!!!!
+            ******************  It for bonus!!!!!!!!!!!!!!!!!
+            var address = ["https://api.myjson.com/bins/yni16", "https://api.myjson.com/bins/worqi", "https://api.myjson.com/bins/ude6y" ];
+            var num = Math.floor(Math.random()*3);
+            var now_address = address[num];
+            $.getJSON(now_address, function (){ 
+                for(    )
+            });
+        }*/    
+        function switchBGM()
+        {
+            var music = document.getElementById( "music" );
+            if ( music.paused )
+                music.play();
+            else
+                music.pause();
+        }
+        window.addEventListener("load", start, false);
+    </script>
+</head>
+
+<body>
+    <table id="board">
+        <caption>15-Puzzle</caption>
+        <tbody>
+            <tr>
+                <td onclick="doClick( 0, 0 )"  id="cell00"></td>
+                <td onclick="doClick( 0, 1 )"  id="cell01">15</td>
+                <td onclick="doClick( 0, 2 )"  id="cell02">14</td>
+                <td onclick="doClick( 0, 3 )"  id="cell03">13</td>
+            </tr>
+            <tr>
+                <td onclick="doClick( 1, 0 )"  id="cell10">12</td>
+                <td onclick="doClick( 1, 1 )"  id="cell11">11</td>
+                <td onclick="doClick( 1, 2 )"  id="cell12">10</td>
+                <td onclick="doClick( 1, 3 )"  id="cell13">09</td>
+            </tr>
+            <tr>
+                <td onclick="doClick( 2, 0 )"  id="cell20">08</td>
+                <td onclick="doClick( 2, 1 )"  id="cell21">07</td>
+                <td onclick="doClick( 2, 2 )"  id="cell22">06</td>
+                <td onclick="doClick( 2, 3 )"  id="cell23">05</td>
+            </tr>
+            <tr>
+                <td onclick="doClick( 3, 0 )"  id="cell30">04</td>
+                <td onclick="doClick( 3, 1 )"  id="cell31">03</td>
+                <td onclick="doClick( 3, 2 )"  id="cell32">02</td>
+                <td onclick="doClick( 3, 3 )"  id="cell33">01</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        <button onclick="restart()" id="restartBtn">Restart Game</button>
+        <button onclick="gotoLastStep()" id="laststepBtn">Go to the Last Step</button>
+        <button onclick="importData()" id="importBtn">Import Data</button>
+        <button onclick="switchBGM()" id="bgmBtn">Switch BGM</button>
+    </p>
+    <div id="msg"></div>
+    <audio preload="auto" controls id="music">
+        <source src="offlimits.mp3" type="audio/mpeg" id="music">
+    </audio>
+    <audio preload="auto" id="winmusic">
+            <source src="applause.mp3" type="audio/mpeg">
+    </audio>
+</body>
+
+</html>

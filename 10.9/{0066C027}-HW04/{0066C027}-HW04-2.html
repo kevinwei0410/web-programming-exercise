@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script tpye = "text/javascript">
+            var pokemon;
+            var square;
+            var dim ;
+            var poke;
+            var ran;
+            pokemon = window.prompt("Please input the Pokemon tou like\n(1 = pikachu, 2=bulbasaur, 3=charmander, 4=squirtle, 5=random):","1");
+            square = window.prompt("Please input the side length (>=1 and <=10):","5");
+            poke = parseInt(pokemon);
+            dim = parseInt(square);
+            if((dim<1)||(dim>10)||(poke>5)||(poke<0))
+            {
+                window.alert("Wrong input! Please press [F5] to reload the page!");
+            }
+            var temp;
+            for(var i=1;i<=dim;i++)
+            {
+                for(var j=1;j<=dim;j++)
+                {
+                    if(poke===5)
+                    {
+                        temp = Math.floor((Math.random() * 10)/2);
+                        switch(temp)
+                        {
+                        case 0:
+                            document.writeln("<img src='squirtle.png'>");
+                            break;
+                        case 1:
+                            document.writeln("<img src='pikachu.png'>");
+                            break;
+                        case 2:
+                            document.writeln("<img src='squirtle.png'>");
+                            break;
+                        case 3:
+                            document.writeln("<img src='bulbasaur.png'>");
+                            break;
+                        case 4:
+                            document.writeln("<img src='charmander.png'>");
+                            break;
+                        }
+                    }
+                    switch(poke)
+                    {
+                        case 1:
+                            document.writeln("<img src='pikachu.png'>");
+                            break;
+                        case 2:
+                            document.writeln("<img src='squirtle.png'>");
+                            break;
+                        case 3:
+                            document.writeln("<img src='bulbasaur.png'>");
+                            break;
+                        case 4:
+                            document.writeln("<img src='charmander.png'>");
+                            break;
+                        case 5:
+                            break;
+                    }
+                }
+                document.writeln("<br>");
+            }
+        </script>
+    </body>
+</html>

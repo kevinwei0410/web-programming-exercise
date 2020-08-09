@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />  
+        <title> 0066C027-HW06-1</title>
+        <script type="text/javascript">
+            function start()
+            {
+                var num1 = Math.floor(Math.random()*5+1);
+                var num2 = Math.floor(Math.random()*6+1);
+                var num3 = Math.floor(Math.random()*16+1);
+                var num4 = Math.floor(Math.random()*3+1);
+                var adj = ["客戶那邊的", "我們的", "負責談需求的", "負責這個部分的", "直到上線前一天", "(雙手一攤)"];
+                var noun = ["專案經理", "主管", "工程師", "設計師", "外包", "User", "聯絡窗口"];
+                var verb = ["當初沒有講清楚", "一直換", "說他肚子不舒服", "擺爛不想做了", "突然開始放長假", "去生小孩了", "離職了", "都沒甚麼sense", "都沒有跟我講", "以為這些不用做", "一直在狀況外", "做事拖拖拉拉", "還搞不清楚狀況", "Quality有問題", "東西一直改", "在整我", "突然就沒來了"];
+                var image =  ["Cat","Cry","Jacky","Harry"];
+                show(adj[num1],noun[num2],verb[num3],image[num4]);
+            }
+            function show(adj,noun,verb,image)
+            {
+                document.getElementById("demo").innerHTML = "<h1 class='header'>專案失敗了，是因為...</h1><h1 class='word1'>"+adj + noun+"<span>"+verb+"!</span></h1><br>"+"<img src="+image+".jpg  alt='error'>";
+            }
+            window.addEventListener("load",start,false);
+        </script>
+        <style text="text/css">
+            @import url(https://fonts.googleapis.com/earlyaccess/cwtexkai.css);
+            body    {text-align:center;
+                    font-family:'cwTeXKai', Perpetua, serif;}
+            .header{color:dimgray;}
+            .word1 {color:navy;}
+            span   {color:firebrick;
+                    font-size:150%;}
+        </style>
+    </head>
+    <body>
+        <div id="demo"></div>
+    </body>
+</html>

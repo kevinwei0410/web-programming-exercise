@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<title>Pin Pictures</title>
+	<style type = "text/CSS">
+		div.nav {
+			border: 1px solid skyBlue;
+			margin-left: 3px;
+			padding: 3px;
+			float: left;
+		}
+		input, p, li {
+			font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", TW-Kai;
+		}
+		li {
+			font-size: 12px;
+		}
+		img.picture {
+			position: absolute;
+		}
+	</style>
+	<script type = "text/javascript">
+		var z_index = 5;
+		function start ()
+		{
+			init();
+			var but1 = document.getElementById("addButton");
+			but1.addEventListener("click",add_new,false);
+			var but2 = document.getElementById("removeAllButton");
+			but2.addEventListener("click",remove,false);
+		}
+		function add_new()
+		{
+			var image_num = document.getElementById("pic").value;
+			var x_pos = document.getElementById("x").value;
+			var y_pos = document.getElementById("y").value;
+			localStorage.setItem("img-"+x_pos+"-"+y_pos,image_num);
+			put_on(image_num , x_pos , y_pos)
+		}
+		function put_on(image_num , x_pos , y_pos)
+		{
+			var img_node = document.createElement("img");
+			var current = document.getElementById("demo");
+			if(image_num < 10){
+				img_node.setAttribute("src","images/0" + image_num + ".png");
+			}
+			else{
+				img_node.setAttribute("src","images/" + image_num + ".png");
+			}
+			img_node.setAttribute("class","picture"); 
+			img_node.setAttribute("style","left:"+x_pos+"px; top:"+y_pos+"px; z-index:"+z_index+";");
+			z_index = z_index + 2 ;
+			current.appendChild(img_node);
+		}
+		function init()
+		{
+			var length = localStorage.length;
+			for(var i = 0; i < length; i ++)
+			{
+				if("img-"==localStorage.key(i).substring(0,4))
+				{
+					var key = localStorage.key(i);
+					var x_pos_y_pos = key.split("-");
+					var image_num = localStorage.getItem(key);
+					put_on(image_num , x_pos_y_pos[1] , x_pos_y_pos[2]);
+				}
+			}
+		}
+		function remove()
+		{
+			var current = document.getElementById("demo");
+			while(current.lastChild){
+				var node = document.getElementById("demo").lastChild;
+				current.removeChild(node);
+			}
+			localStorage.clear();
+		}
+		window.addEventListener("load",start,false);
+	</script>	
+</head>
+<body>
+	<img src="images/blackboard.jpg" height="600" width="800" style="float:left; z-index:0;" />	
+	<img id="img-0" class="picture" style="top: 50px; left: 50px; z-index:1;" src="images/00.png" draggable="true" />	
+	<div id = "nav" class = "nav">
+		<form action = "#">
+			<p>
+				<label>要放哪個道具圖片(請輸入編號): 
+				<input type = "number" id = "pic" min = "1" max = "10" step = "1" value = "1" />
+				</label><br />
+				<label>圖片X座標: 
+				<input type = "number" id = "x" min = "40" max = "600" step = "1" value = "40" />
+				</label><br/>
+				<label>圖片Y座標: 
+				<input type = "number" id = "y" min = "40" max = "400" step = "1" value = "100" />
+				</label>
+			</p>
+			<p>
+				<input type = "button" value = "新增圖片" id = "addButton">
+				<input type = "button" value = "移除所有圖片" id = "removeAllButton">
+			</p>
+		</form>
+		<ul>
+			<li>[01]任意門</li>
+			<li>[02]時光機</li>
+			<li>[03]竹蜻蜓</li>
+			<li>[04]時光布</li>
+			<li>[05]記憶麵包</li>
+			<li>[06]縮小燈</li>
+			<li>[07]翻譯蒟蒻</li>
+			<li>[08]如果電話亭</li>
+			<li>[09]穿透環</li>
+			<li>[10]更衣照相機</li>
+		</ul>
+	</div>
+	<div id="demo"></div>
+</body>
+</html>

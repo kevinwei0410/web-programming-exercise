@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+</title>
+<style type = "text/css">
+	.span1{color:firebrick; font-weight:bolder;}
+	.span2{text-decoration: underline; color:navy;}
+	body{font-family:helvetica; font-weight:bold;}
+</style>
+</head>
+<body>
+<script>
+	var name;
+	var age;
+	var newnumber;
+	name = window.prompt("please input your name:");
+	age = window.prompt("please input your age:");
+	document.writeln("<p class='line1'>Hello,<span class='span1'>"+ name +"</span> !</p>");
+	console.log("Hello, "+name+"!");
+	newnumber = parseInt(age);
+	if(newnumber<0)
+	{
+		window.alert("Your input is incerrent!");
+		console.log("Your input is incerrent!");
+		document.writeln("Yor age is a mystery!")
+	}
+	else if(newnumber===1)
+	{
+		document.writeln("<p class='line2'>You are <span class='span2'>one</span> year old!</p>");
+		console.log("You are one year old !");
+	}
+	else
+	{
+		document.writeln("<p class='line2'>You are <span class='span2'>"+ age +"</span> years old!</p>");
+		console.log("You are "+age+" years old!");
+	}
+</script>
+</body>
+</html>

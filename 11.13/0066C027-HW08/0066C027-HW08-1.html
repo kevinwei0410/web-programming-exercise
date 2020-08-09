@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>0066C027-HW08-1</title>
+        <meta charset = "utf-8">
+        <style type="text/css">
+            body{font-family:Helvetica, "Microsoft YaHei", "LiHei Pro", TW-Kai;}
+            #img{width:30%;}
+            #word{color:navy;
+                 font-weight:bold;
+                 font-size: 20px;}
+            div{width:30%;
+                text-align: center;}
+
+        </style>
+        <script type="text/javascript">
+            function start()
+            {
+                window.setInterval(run,1000);
+            }
+            function run()
+            {
+                var str = "任意門 時光機 竹蜻蜓 時光布 記憶麵包 縮小燈 翻譯蒟蒻 如果電話亭 穿透環 更衣照相機";
+                var items = str.split(" ");
+                var num = Math.floor(Math.random()*9+1);
+                var image = document.getElementById("img");
+                if((num+1)==10)
+                    image.src="10.png"; 
+                else
+                    image.src="0"+(num+1)+".png";
+                document.getElementById("word").innerHTML = items[num];
+                
+            }
+            window.addEventListener("load",start,false);
+        </script>
+    </head>
+    <body>
+        <img src="00.png" alt="error" id="img">
+        <div id="word">多拉A夢</div>
+    </body>
+</html>
